@@ -1,3 +1,11 @@
 .is-done {
   text-decoration: line-through;
 }
+
+.numberStyle{
+  position: absolute;
+  right: 5%;
+  border-style: solid;
+  border-color: red;
+  padding: 2px 8px 2px 8px;
+}
