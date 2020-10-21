@@ -14,9 +14,9 @@
     />
     <link href="./src/style/main.css" rel="stylesheet" />
   </head>
-  <body>
-    <div class="container">
-      <h1>What do I need to do today</h1>
+  <body onload="prepared()">
+    <div class="container" id="todo-app" >
+      <h1>{{title}}</h1>
 
       <div class="input-group mb-3">
         <input
@@ -24,7 +24,12 @@
           class="form-control"
           placeholder="Put your new task name heare"
           id="inputTask"
+          v-model="newTaskName"
+          @keyup.enter="CreateTask"
+          
         />
+      
+        
         <div class="input-group-append">
           <button class="btn btn-primary" type="button" onclick="createTask()">
             Create
@@ -32,8 +37,14 @@
         </div>
       </div>
 
+     
+
       <div>
-        <ul class="list-group mylist" id="list-content"></ul>
+        <ul class="list-group mylist" id="list-content">
+          <li v-for="por in list" class="list-group-item list-item ":class="{'is-done':por.done}">
+            <input type="checkbox" v-model="por.done" aria-label="Checkbox for following text input" > {{por.name}}
+        </li>
+        </ul>
       </div>
 
      
@@ -45,7 +56,11 @@
               <p class="card-text">
 
                 <ul class="list-group mylist" id="todo-list">
-
+                    
+                    <li v-for="task in todoList" class="list-group-item list-item ">
+                        <input type="checkbox"  aria-label="Checkbox for following text input" > {{task.name}}
+                    </li>
+                    
 
                 </ul>
     
@@ -62,7 +77,9 @@
               <p class="card-text">
 
                 <ul class="list-group mylist" id="noTodo-list">
-
+                  <li v-for="task in doneList" class="list-group-item list-item ">
+                    <input type="checkbox"  aria-label="Checkbox for following text input" > {{task.name}}
+                </li>
 
                 </ul>
               </p>
@@ -76,4 +93,5 @@
     
   </body>
   <script src="./src/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </html>

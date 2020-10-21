@@ -26,58 +26,37 @@ let list = [
   },
 ];
 
-const listContainer = document.querySelector("#list-content");
-const listToDo=document.querySelector("#todo-list");
-const nolistToDo=document.querySelector("#noTodo-list");
-const titleNoToDo=document.querySelector("#TitlenoTodoList");
-const titleToDo=document.querySelector("#TitleTodoList");
-
-let itemsDo=0;
-let itemsNoDo=0;
-
-
-paintList(list);
-paintTasksList(list);
-
-function createTask(task) {
-  const input = document.querySelector("#inputTask");
-  list.push({
-    id: list.length + 1,
-    name: input.value,
-    done: false,
-  });
-  input.value = "";
-  paintList(list);
-}
-
-const checkTask = (checkbox, id) => {
-  const task = list.find((element) => {
-
-    return element.id === id;
-  });
-
-  task.done = checkbox.checked;
-
+function prepared(){
  
-  paintList(list);
-  paintTasksList(list);//Function that implements the item's movement
-};
-
-function paintList(lst) {
-  let res = "";
-  lst.forEach((element) => {
-    res += renderListItem(element);
-  });
-  listContainer.innerHTML = res;
+  var app = new Vue({
+    el: '#todo-app',
+    data: {
+      title: 'What do I need to do today',
+      list:list,
+      newTaskName:'',
+    },
+    computed:{
+      todoList(){
+        return this.list.filter((task)=>!task.done);
+      },
+      doneList(){
+        return this.list.filter((task)=>task.done);
+      }
+    }
+    ,
+    methods:{
+      CreateTask(){
+        this.list.push({
+          id: list.length + 1,
+          name: this.newTaskName,
+          done: false,
+        })
+        this.newTaskName='';
+      }
+    }
+  })
 }
 
-function renderListItem(item) {
-  const isDone = item.done ? "is-done" : "";
-  const checked = item.done ? "checked" : "";
-  return `<li class="list-group-item list-item ${isDone}">
-              <input type="checkbox" ${checked} aria-label="Checkbox for following text input" onclick="checkTask(this, ${item.id})"> ${item.name}
-          </li>`;
-}
 //----------------------------------------Bryan LOGIC ---------------------------------------------------------------//
 
 function paintTasksList(e){
